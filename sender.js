@@ -109,7 +109,7 @@ if (pc) {
 			console.log('oniceconnectionstatechange');
 			console.log(e.target);
 			//document.getElementById('connection').innerHTML = e.target.iceConnectionState + " ... " + e.target.iceGatheringState;
-			if (e.target.iceConnectionState == 'connected' & e.target.iceGatheringState=='complete'){
+			if (e.target.iceConnectionState == 'connected'){
 				document.getElementById('connection').innerHTML = 'Соединение установлено';
 				document.getElementById('btn_AudioOn').style.display='inline-block';
 				document.getElementById('btn_AudioOff').style.display='inline-block';
