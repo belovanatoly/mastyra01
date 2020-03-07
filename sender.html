@@ -1,0 +1,32 @@
+﻿<html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Звонок из браузера</title>
+  <style>
+	body {text-align:center; background-color:#000; color:#CCC; font-size:36px;}
+    video { height: 240px; width: 320px; border: 1px solid grey;}
+	#btn_AudioOn {color:green; display: none;}
+	#btn_AudioOff {color:black; display: none;}
+	#btn_HangUp {color:black; display: none;}
+	#debug {color:#CCC; font-size:12px; left:10px; text-align:left;}
+  </style>
+
+</head>
+
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/sender.js"></script>
+<div id='debug'>&nbsp;</div>  
+<p>Звонок из браузера</p>
+<div id='buttons'>
+  <button id="btn_AudioOn" onclick="AudioOn_click()">AudioOn</button>
+  <button id="btn_AudioOff" onclick="AudioOff_click()">AudioOff</button>
+   <button id="btn_HangUp" onclick="HangUpCall();">Stop</button>
+ </div>
+  <video id="localVideo"></video>
+  <video id="remoteVideo"></video>
+  <p id='logs'>Разрешите доступ к устройствам связи</p>
+  <p id='connection'></p>
+</body>
+</html>

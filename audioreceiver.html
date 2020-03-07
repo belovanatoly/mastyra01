@@ -1,0 +1,37 @@
+﻿<html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>receiver</title>
+  <style>
+    body {text-align:center; font-size:36px;}
+	video { height: 240px; width: 320px; border: 1px solid grey; display:none;}
+	#btn_getCall {color:black; display:none;}
+	#btn_AudioOn {color:green; display: none;}
+	#btn_AudioOff {color:black; display: none;}
+	#btn_HangUp {color:black; display: none;}
+	#debug {color: black; font-size:12px; left:10px; text-align:left;}
+
+  </style>
+
+</head>
+
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/audioreceiver.js"></script>
+<div id='debug'>&nbsp;</div>  
+<p>Receiver</p>
+<div id="logs1">&nbsp;</div>
+
+  <button id="btn_getCall" onclick="getCall_click()">Принять новый звонок</button>
+  <button id="btn_AudioOn" onclick="AudioOn_click()">AudioOn</button>
+  <button id="btn_AudioOff" onclick="AudioOff_click()">AudioOff</button>
+   <button id="btn_HangUp" onclick="HangUpCall();">Stop</button>
+  <br>
+  <video id="localVideo"></video>
+  <video id="remoteVideo"></video>
+  <p id='logs'>&nbsp;</p>
+  <p id='connection'>&nbsp;</p>
+  
+</body>
+</html>

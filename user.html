@@ -1,0 +1,28 @@
+﻿<html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>user</title>
+  <style>
+    video { height: 240px; width: 320px; border: 1px solid grey; }
+  </style>
+
+</head>
+
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/user.js"></script>
+<p>User</p>
+
+  <button id="btn_getUserMedia" onclick="getUserMedia_click()">getUserMedia</button>
+  <button id="btn_createOffer" onclick="createOffer_click()">createOffer</button>
+  <button id="btn_AudioOn" onclick="AudioOn_click()">AudioOn</button>
+  <button id="btn_AudioOff" onclick="AudioOff_click()">AudioOff</button>
+  <br>
+  <video id="localVideo"></video>
+  <video id="remoteVideo"></video>
+  <p id='logs'>&nbsp;</p>
+  <p id='connection'>&nbsp;</p>
+  
+</body>
+</html>
