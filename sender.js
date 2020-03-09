@@ -54,9 +54,12 @@ if(!RTCPeerConnection) {
 	document.getElementById('connection').innerHTML = 'Your browser does not support WebRTCь';
 	}
 
+socket.emit('message','sender');
+
+
 pc = new RTCPeerConnection(servers);
-	console.log('pc is created');
-	console.log(pc);
+console.log('pc is created');
+console.log(pc);
 
 
 navigator.mediaDevices.getUserMedia(mediaConstraints)
@@ -67,6 +70,7 @@ navigator.mediaDevices.getUserMedia(mediaConstraints)
 
 function newStream(stream)
 {
+		//socket.emit('join', 'room1');
 		console.log("MediaStream is created");
 		console.log(stream);
 		
@@ -77,7 +81,9 @@ function newStream(stream)
 	  
 		localStream = stream;
 		console.log('we do newcall');
-		socket.emit('message','newcall');
+
+		socket.emit('message', {type: 'newcall', Socket_ID: socket.id});
+		console.log('Sender do new call');
 		document.getElementById('logs').innerHTML="&nbsp";
 		document.getElementById('connection').innerHTML="Запрос на соединение отправлен ...";
 
@@ -85,13 +91,15 @@ function newStream(stream)
 
 
 function PeerConnection(){
+
+
 if (pc) {
 		
-		pc.onicecandidate = function (e)
+		pc.onicecandidate = function (e)  // добавить прекратить при установке соединения
 		{
 			console.log("ICE candidate:");
 			console.log(e.candidate);
-			socket.emit("message", {type: "candidate", candidate: e.candidate});
+			socket.emit("message", {type: "Sender_candidate", candidate: e.candidate});
 		};
 
 		pc.onaddstream = function(e) {
@@ -114,11 +122,11 @@ if (pc) {
 				document.getElementById('btn_AudioOn').style.display='inline-block';
 				document.getElementById('btn_AudioOff').style.display='inline-block';
 				document.getElementById('btn_HangUp').style.display='inline-block';
-				
-
+				socket.emit('message',{type:'connection', value:'Sender (' + socket.id + ') is connected'});
 				}
 			if (e.target.iceConnectionState == 'disconnected' & e.target.iceGatheringState=='complete'){
 				document.getElementById('connection').innerHTML = 'Связь прервалась';
+				socket.emit('message',{type:'connection_off', value:'Sender is disconnected'})
 				closeVideoCall();
 				}
 		};
@@ -127,32 +135,6 @@ if (pc) {
 	else console.log('Error: pc is not created. please creat pc.');
 }
 
-
-/*
-function createOffer_click(){	
-if (pc)	{
-		
-		
-		pc.createOffer(
-			function(desc)
-			{
-				console.log('createOffer');
-				pc.setLocalDescription(desc);
-				console.log('setLocalDescription');
-				console.log(desc);
-				socket.emit("message", desc);
-			},
-			function(err)
-			{
-				console.error(err);
-			}
-		);
-
-		}
-		else console.log('error: pc is not created. please creat pc.');
-}
-
-*/
 function AudioOff_click(){
 	document.getElementById('remoteVideo').muted = true;
 	document.getElementById('btn_AudioOn').style.color='green';
@@ -169,7 +151,7 @@ function AudioOn_click(){
 function HangUpCall(){
 	console.log('HangUpCall is clicked');
 	document.getElementById('connection').innerHTML= 'Разъединено Вами';
-	socket.emit("message", 'HangUpCall');
+	socket.emit("message", {type:'HangUpCall_clicked', value:'Sender_clicked_HangUpCall' });
 	closeVideoCall();
 }
 
@@ -234,7 +216,7 @@ socket.on('Request_ID', function (Request_ID)
 {
 	console.log("Request_ID " + Request_ID);
 	User_Request_ID = Request_ID;
-	document.getElementById('debug').innerHTML= 'User_Request_ID: ' + User_Request_ID;
+	document.getElementById('debug').innerHTML= 'User_Request_ID: ' + User_Request_ID + '<br>' + 'User_Socket_ID: ' + socket.id; 
 });
 
 
@@ -243,43 +225,24 @@ socket.on('message', function(message)
 	console.log("Message from server:");
 	console.log(message);
 
-	if (message.type == "Current_Request_ID"){
-		console.log('Current_Request_ID: ', message.value);
-		if (User_Request_ID == message.value){ 
-			console.log('Current_Request_ID exist');
-			socket.emit('message', {type: 'Current_Request_ID_existing', value: 'yes'});
-			}
+	if (message.type == "Current_Request_Socket_ID"){
+		console.log('Current_Request_Socket_ID: ', message.value);
+		if (socket.id == message.value){ 
+			console.log('Current_Request_Socket_ID is equil');
+			socket.emit('message', {type: 'Current_Request_Socket_ID_existing', value: 'yes'});
+			} 
+			else {
+				console.log('Current_Request_Socket_ID is not equil');
+				}
 		}
 
 
-
-
-	if (message.type == "answer")
-	{
-		if (pc){
-			pc.setRemoteDescription(new RTCSessionDescription(message));
-			console.log('setRemoteDescription');
-			console.log(message);
-			//document.getElementById('logs').innerHTML="Aswer is received";
-
-			}
-	}
-	
 	if (message.type == "offer")
 	{
-			console.log('Offer is received:');
-			//document.getElementById('logs').innerHTML="Offer is received";
-
-			console.log(message);
-			
-			PeerConnection();
-			
-			//pc.addStream(localStream);
-		   //localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
-		   localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
-	  
+		  console.log('Offer is received:');
+		  PeerConnection();
+		  localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
 		  console.log("MediaStream is added");
-
 			
 			if(pc){
 				pc.setRemoteDescription(new RTCSessionDescription(message));
@@ -293,8 +256,6 @@ socket.on('message', function(message)
 					console.log('setLocalDescription');
 					console.log(desc);
 					socket.emit("message", desc);
-					//document.getElementById('logs').innerHTML="Answer is sended";
-
 				}, 
 				function(err)
 				{
@@ -304,12 +265,12 @@ socket.on('message', function(message)
 			}
 	}
 
-	if (message.type == "candidate")
+	if (message.type == "Receiver_candidate")
 	{
 			if (message.candidate)
 			{
-				console.log('IceCandidate is receved:');
-				console.log(message.candidate);
+				console.log('IceCandidate is received:');
+				//console.log(message.candidate);
 				if (pc) {
 					pc.addIceCandidate(new RTCIceCandidate(message.candidate));
 					console.log('new IceCandidate is added');
@@ -317,11 +278,12 @@ socket.on('message', function(message)
 			}
 	}
 
-if (message == 'HangUpCall'){
-	document.getElementById('connection').innerHTML= 'Разъединено другой стороной';
-	closeVideoCall();}
-
-});
+	if (message.type == "HangUpCall_clicked"){
+		document.getElementById('logs').innerHTML= "&nbsp";
+		document.getElementById('connection').innerHTML= 'Разъединено другой стороной';
+		socket.emit('message','Sender is disconnected by Receiver')
+		closeVideoCall();}
+	});
 
 
 socket.on('error', function(err)

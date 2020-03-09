@@ -4,13 +4,14 @@
 <meta charset="utf-8">
 <title>receiver</title>
   <style>
-    body {text-align:center; font-size:36px;}
+    body {text-align:center;}
 	video { height: 240px; width: 320px; border: 1px solid grey; display:none;}
 	#btn_getCall {color:black; display:none;}
 	#btn_AudioOn {color:green; display: none;}
 	#btn_AudioOff {color:black; display: none;}
 	#btn_HangUp {color:black; display: none;}
-	#debug {color: black; font-size:12px; left:10px; text-align:left;}
+	#logs1 {color:red; font-size:36px;}
+	#debug {color: red; font-size:18px; left:10px; text-align:left;}
 
   </style>
 
@@ -20,7 +21,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/audioreceiver.js"></script>
 <div id='debug'>&nbsp;</div>  
-<p>Receiver</p>
+<h1>Receiver</h1>
 <div id="logs1">&nbsp;</div>
 
   <button id="btn_getCall" onclick="getCall_click()">Принять новый звонок</button>
