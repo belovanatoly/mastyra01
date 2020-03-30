@@ -22,17 +22,12 @@ io.sockets.on('connection', function (socket){
 	console.log('an user connected: ' + socket.id);
 	socket.emit('success');
 	
-	socket.on('disconnect', function () {
+	socket.on('disconnect', function (socket) {
 		console.log('an user disconnected: ' + socket.id);
-/*		
-		if(socket.id == Current_Request_Socket_ID){
-			io.to(Receiver_Socket_ID).emit('message', 'user_leave_browser'); 
-			newSession();
-			}
-*/	
-	
+
 		pos = Awaiting_Request_ID.indexOf(socket.id);
 		console.log('pos=' + pos);
+		
 		if (pos !== -1){
 			Awaiting_Request_ID.splice(pos,2);
 			console.log('Awaiting_Request_ID at disconnected' );
@@ -46,9 +41,6 @@ io.sockets.on('connection', function (socket){
 			});
 	
 	socket.on('message', function (message){
-	//console.log('Message:');
-	//console.log(message);
-	//socket.broadcast.emit('message', message); // закрываем сквозной обмен
 	
 	if (message == 'receiver'){
 		Receiver_Socket_ID = socket.id;
@@ -68,7 +60,7 @@ io.sockets.on('connection', function (socket){
 		console.log(Awaiting_Request_ID);
 		Awaiting_Request_ID.push(message.Socket_ID,Request_ID);
 		console.log(Awaiting_Request_ID);
-		socket.emit('Request_ID', Request_ID);  // можно сделать сразу на стороне сендера при отправке запроса
+		socket.emit('Request_ID', Request_ID); 
 		console.log('Receiver_busy :' + Receiver_busy);
 		Await_Num_Change();
 			
@@ -145,6 +137,7 @@ io.sockets.on('connection', function (socket){
 	});
 
 });
+
 
 function NewSession(){
 	console.log('newSession');

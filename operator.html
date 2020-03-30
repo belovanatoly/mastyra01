@@ -1,0 +1,55 @@
+﻿<html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Панель оператора</title>
+  <style>
+    body { text-align:center; background-color:#CCC;}
+	div { width:600px; margin: 5px auto; color:grey;  }
+	#Panel {border:10px solid #454545; padding:10px 20px; margin-top:20px; color:black; background-color: white; border-radius:20px; }
+	h1 { text-align:center;}
+	#Line { text-align:left; color:grey;}
+	#Awaiting_List { text-align:left;}
+	#logs1{ text-align: center; color:red; font-size:36px;}
+	#buttons { min-height:100px; text-align:center; margin: 50px auto;}
+	
+	video { height: 240px; width: 320px; border: 1px solid grey; display:none; }
+	#btn_getCall {display:none; font-size:36px; width:500px; height: 100px;}
+	#btn_AudioOn {display: none;}
+	#btn_AudioOff {display: none;}
+	#btn_HangUp {display: none; font-size:36px; width:500px; height: 100px;}
+	#logs { text-align:left;}
+	#connection { text-align:left;}
+	#debug {color: red; font-size:18px; left:10px; text-align:left; display:none;}
+
+  </style>
+
+</head>
+
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<div id="Panel">
+<div id='debug'>&nbsp;</div>  
+<h1>Панель оператора</h1>
+<div id="logs1">&nbsp;</div>
+
+<div id="buttons">
+<button id="btn_getCall" onclick="getCall_click()">Принять новый звонок</button>
+<button id="btn_AudioOn" onclick="AudioOn_click()">AudioOn</button>
+<button id="btn_AudioOff" onclick="AudioOff_click()">AudioOff</button>
+ <button id="btn_HangUp" onclick="HangUpCall();">Завершить звонок</button>
+</div>
+<video id="localVideo"></video>
+<video id="remoteVideo"></video>
+<div id="Awaiting_List">&nbsp;</div>
+<div id='logs'>&nbsp;</div>
+<div id='connection'>&nbsp;</div>
+<div id="Line">&nbsp;</div>
+</div>
+
+ 
+<script src="/operator.js"></script>
+ 
+  
+</body>
+</html>
