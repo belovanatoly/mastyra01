@@ -46,7 +46,7 @@ var mediaConstraints = {
 };
 
 var	localVideo = document.getElementById('localVideo'),
-	remoteVideo = document.getElementById('remoteVideo');
+	remoteVideo = document.getElementById('remoteVideo'),
 
 	localStream = null,
 	pc = null;
@@ -94,10 +94,13 @@ if (!!navigator.getUserMedia){document.getElementById('debug').innerHTML += 'bro
 if (getParam('id')) {
 	Room_ID = getParam('id');
 	console.log ('Room_ID = ' + Room_ID);
-	document.getElementById('debug').innerHTML+='Room_ID = ' + Room_ID + '<br>';
+	document.getElementById('debug').innerHTML+= 'Room_ID = ' + Room_ID + '<br>';
 
 	}
-
+	else {
+		console.log ('Room_ID is absent');
+		document.getElementById('debug').innerHTML+='Room_ID is absent<br>';
+		}
 	
 pc = new RTCPeerConnection(servers);
 console.log('pc is created');
