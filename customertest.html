@@ -95,16 +95,19 @@ document.getElementById('debug').innerHTML += 'HERE 1<br>';
 
 
 if (getParam('id')) {
+	document.getElementById('debug').innerHTML += 'HERE 2<br>';
 	Room_ID = getParam('id');
 	console.log ('Room_ID = ' + Room_ID);
-	//document.getElementById('debug').innerHTML+= 'Room_ID = ' + Room_ID + '<br>';
 
 	}
 	else {
+		document.getElementById('debug').innerHTML += 'HERE 3<br>';
 		console.log ('Room_ID is absent');
 		//document.getElementById('debug').innerHTML+='Room_ID is absent<br>';
 		}
-	
+		
+document.getElementById('debug').innerHTML += 'HERE 4<br>';
+
 pc = new RTCPeerConnection(servers);
 console.log('pc is created');
 document.getElementById('debug').innerHTML+='pc is created<br>';
