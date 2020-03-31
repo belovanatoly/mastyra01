@@ -152,7 +152,7 @@ function getStream(stream)
 		// запоминаем местный медиапоток в локальной переменной
 		localStream = stream;
 	  
-		 pc.addStream(stream);
+		 //pc.addStream(stream);
 
 
 		console.log('we do newcall');
@@ -327,7 +327,7 @@ socket.on('message', function(message)
 		 // PeerConnection();
 		  
 		 // pc.addStream(localStream);
-		  //localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
+		  localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
 		  console.log("MediaStream is added");
 			document.getElementById('debug').innerHTML += 'MediaStream is added<br>';
 			if(pc){
