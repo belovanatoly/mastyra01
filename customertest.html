@@ -326,8 +326,8 @@ socket.on('message', function(message)
 			document.getElementById('debug').innerHTML += 'Offer is received<br>';
 		 // PeerConnection();
 		  
-		 // pc.addStream(localStream);
-		  localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
+		  pc.addStream(localStream);
+		  //localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
 		  console.log("MediaStream is added");
 			document.getElementById('debug').innerHTML += 'MediaStream is added<br>';
 			if(pc){
