@@ -32,7 +32,7 @@
 
  <script>
  // JavaScript Document
-console.log("begin");
+console.log("begin 1");
 document.getElementById('debug').innerHTML+="begin<br>";
 
 
@@ -108,6 +108,12 @@ if (getParam('id')) {
 		
 document.getElementById('debug').innerHTML += 'HERE 4<br>';
 
+function getParam(param){
+	document.getElementById('debug').innerHTML += 'HERE 5<br>';
+	return new URLSearchParams(window.location.search).get(param);
+	}
+
+
 pc = new RTCPeerConnection(servers);
 console.log('pc is created');
 document.getElementById('debug').innerHTML+='pc is created<br>';
@@ -122,9 +128,6 @@ navigator.mediaDevices.getUserMedia(mediaConstraints)
     .catch(Error);
 */
 
-function getParam(param){
-	return new URLSearchParams(window.location.search).get(param);
-	}
 
 
 function getStream(stream)
@@ -275,7 +278,7 @@ socket.on('success', function ()
 {
 	console.log("socket.on connected");
 	socket.emit('message', 'sender');
-
+	document.getElementById('debug').innerHTML += 'socket.on connected<br>';
 });
 
 socket.on('Request_ID', function (Request_ID)
