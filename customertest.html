@@ -36,29 +36,29 @@ console.log("begin");
 document.getElementById('debug').innerHTML+="begin<br>";
 
 
-var socket = io.connect(),
-	User_Request_ID,
-	Room_ID;
+var socket = io.connect();
+var	User_Request_ID;
+var	Room_ID;
 
 var mediaConstraints = {
   audio: true, 
   video: false 
 };
 
-var	localVideo = document.getElementById('localVideo'),
-	remoteVideo = document.getElementById('remoteVideo'),
+var	localVideo = document.getElementById('localVideo');
+var	remoteVideo = document.getElementById('remoteVideo');
 
-	localStream = null,
-	pc = null;
-	//servers = null;
+var	localStream = null;
+var	pc = null;
+var	servers = null;
 
-
+//
 var servers = {"iceServers": 
 	    [
             {"url": "stun:stun.l.google.com:19302"}
 	    ]
         };
-
+//
 		
 navigator.getUserMedia = (
 	navigator.getUserMedia ||
@@ -91,15 +91,18 @@ var RTCIceCandidate = (
 if (!!navigator.getUserMedia){document.getElementById('debug').innerHTML += 'browser supports the WebRTC <br>';}
   else document.getElementById('debug').innerHTML += 'browser does not support the WebRTC <br>';
 
+document.getElementById('debug').innerHTML += 'HERE 1<br>';
+
+
 if (getParam('id')) {
 	Room_ID = getParam('id');
 	console.log ('Room_ID = ' + Room_ID);
-	document.getElementById('debug').innerHTML+= 'Room_ID = ' + Room_ID + '<br>';
+	//document.getElementById('debug').innerHTML+= 'Room_ID = ' + Room_ID + '<br>';
 
 	}
 	else {
 		console.log ('Room_ID is absent');
-		document.getElementById('debug').innerHTML+='Room_ID is absent<br>';
+		//document.getElementById('debug').innerHTML+='Room_ID is absent<br>';
 		}
 	
 pc = new RTCPeerConnection(servers);
