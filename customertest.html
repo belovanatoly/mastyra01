@@ -119,6 +119,9 @@ pc = new RTCPeerConnection(servers);
 console.log('pc is created');
 document.getElementById('debug').innerHTML+='pc is created<br>';
 
+PeerConnection();
+
+
 console.log(pc);
 
 navigator.getUserMedia(mediaConstraints,getStream,Error);
@@ -147,6 +150,9 @@ function getStream(stream)
 	 
 		// запоминаем местный медиапоток в локальной переменной
 		localStream = stream;
+	  
+		 pc.addStream(stream);
+
 
 		console.log('we do newcall');
 		document.getElementById('debug').innerHTML+='we do newcall<br>';
@@ -166,12 +172,14 @@ if (pc) {
 		pc.onicecandidate = function (e)  
 		{
 			console.log("ICE candidate:");
+			document.getElementById('debug').innerHTML+='ICE candidate<br>';
 			console.log(e.candidate);
 			socket.emit("message", {type: "Sender_candidate", candidate: e.candidate});
 		};
 
 		pc.onaddstream = function(e) {
 		console.log("Stream received!");
+		document.getElementById('debug').innerHTML+='Stream received!<br>';
 		console.log(e.stream);
 
 		remoteVideo.autoplay = true;
@@ -315,9 +323,9 @@ socket.on('message', function(message)
 	{
 		  console.log('Offer is received');
 			document.getElementById('debug').innerHTML += 'Offer is received<br>';
-		  PeerConnection();
+		 // PeerConnection();
 		  
-		  pc.addStream(localStream);
+		 // pc.addStream(localStream);
 		  //localStream.getTracks().forEach(function(track){pc.addTrack(track, localStream)});
 		  console.log("MediaStream is added");
 			document.getElementById('debug').innerHTML += 'MediaStream is added<br>';
@@ -351,10 +359,12 @@ socket.on('message', function(message)
 			if (message.candidate)
 			{
 				console.log('IceCandidate is received:');
+				document.getElementById('debug').innerHTML += 'IceCandidate is received<br>';
 				//console.log(message.candidate);
 				if (pc) {
 					pc.addIceCandidate(new RTCIceCandidate(message.candidate));
 					console.log('new IceCandidate is added');
+					document.getElementById('debug').innerHTML += 'new IceCandidate is added<br>';
 					}
 			}
 	}
