@@ -33,7 +33,7 @@
  <script>
  // JavaScript Document
 console.log("begin");
-document.getElementById('debug').innerHTML+="begin";
+document.getElementById('debug').innerHTML+="begin<br>";
 
 
 var socket = io.connect(),
@@ -94,11 +94,15 @@ if (!!navigator.getUserMedia){document.getElementById('debug').innerHTML += 'bro
 if (getParam('id')) {
 	Room_ID = getParam('id');
 	console.log ('Room_ID = ' + Room_ID);
+	document.getElementById('debug').innerHTML+='Room_ID = ' + Room_ID + '<br>';
+
 	}
 
 	
 pc = new RTCPeerConnection(servers);
 console.log('pc is created');
+document.getElementById('debug').innerHTML+='pc is created<br>';
+
 console.log(pc);
 
 navigator.getUserMedia(mediaConstraints,getStream,Error);
