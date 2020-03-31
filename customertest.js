@@ -14,16 +14,16 @@ var	localVideo = document.getElementById('localVideo'),
 	remoteVideo = document.getElementById('remoteVideo');
 
 	localStream = null,
-	pc = null,
-	servers = null;
+	pc = null;
+	//servers = null;
 
-/*
+
 var servers = {"iceServers": 
 	    [
             {"url": "stun:stun.l.google.com:19302"}
 	    ]
         };
-*/
+
 		
 navigator.getUserMedia = (
 	navigator.getUserMedia ||

@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script> 
+  function call_openwindow()
+	  {
+		  window.open(
+		  	"http://127.0.0.1:5000/customer.html/?id=room1",
+			"mywindow",
+			"left=50px, top=50px, resizable=1, width=400px, height=500px");
+	  }
+</script> 
+</head>
+
+
+<body>
+<p><A href="javascript: call_openwindow()">Позвонить с сайта</A></p>
+
+<p><button id="Call" onclick="call_openwindow()">Позвонить с сайта</button></p>
+<hr>
+<p><A href="http://127.0.0.1:5000/customer.html/?id=room1" target="_blank">Позвонить с сайта</A></p>
+<p><A href="http://127.0.0.1:5000/customer.html/?id=room1" target="_blank"><button>Позвонить с сайта</button></A></p>
+
+
+</body>
+</html>
