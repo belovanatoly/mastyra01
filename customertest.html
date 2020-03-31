@@ -5,12 +5,13 @@
 <title>Звонок из браузера</title>
   <style>
 	body {text-align:center; background-color:green; color:#FFF; font-size:24px; }
-    video { height: 240px; width: 320px; border: 1px solid grey; display:none; }
+    video { height: 240px; width: 320px; border: 1px solid grey;  }
 	#btn_AudioOn {color:green; display: none;}
 	#btn_AudioOff {color:black; display: none;}
 	#btn_HangUp {color:black; display: none; font-size:36px; width:250px; height: 100px;}
 	#logs { margin-top:100px;}
-	#debug, #logs1 {color:#CCC; font-size:12px; }
+	#logs1 {color:#CCC; font-size:12px; }
+	#debug {color:#FFF; font-size:24px; }
   </style>
 
 </head>
@@ -32,7 +33,7 @@
 
  <script>
  // JavaScript Document
-console.log("begin 1");
+console.log("begin");
 document.getElementById('debug').innerHTML+="begin<br>";
 
 
@@ -42,7 +43,7 @@ var	Room_ID;
 
 var mediaConstraints = {
   audio: true, 
-  video: false 
+  video: true 
 };
 
 var	localVideo = document.getElementById('localVideo');
@@ -133,6 +134,7 @@ navigator.mediaDevices.getUserMedia(mediaConstraints)
 function getStream(stream)
 {
 		console.log("MediaStream is created");
+		document.getElementById('debug').innerHTML+='MediaStream is created<br>';
 		console.log(stream);
 		
 
@@ -147,7 +149,8 @@ function getStream(stream)
 		localStream = stream;
 
 		console.log('we do newcall');
-
+		document.getElementById('debug').innerHTML+='we do newcall<br>';
+		
 		socket.emit('message', {type: 'newcall', Room_ID: Room_ID});
 		console.log('Sender do new call');
 		document.getElementById('logs').innerHTML="&nbsp";
