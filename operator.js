@@ -6,7 +6,7 @@ var Room_ID;
 
 var mediaConstraints = {
 	audio: true, 
-	video: true
+	video: false
 	};
 
 const localVideo = document.getElementById('localVideo');
